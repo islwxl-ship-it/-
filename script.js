@@ -1,28 +1,39 @@
-const mobileMenu = document.getElementById('mobile-menu');
-const navMenu = document.querySelector('.nav-menu');
-const scrollUpBtn = document.getElementById('scrollUpBtn');
+const burger = document.getElementById('burger');
+const navLinks = document.getElementById('nav-links');
+const topBtn = document.getElementById('topBtn');
 
-mobileMenu.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
+burger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
 });
-document.querySelectorAll('.nav-menu a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        navMenu.classList.remove('active'); 
-        const targetId = this.getAttribute('href');
-        document.querySelector(targetId).scrollIntoView({
-            behavior: 'smooth'
-        });
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
     });
 });
-scrollUpBtn.addEventListener('click', () => {
+
+topBtn.addEventListener('click', () => {
     window.scrollTo({
         top: 0,
         behavior: 'smooth'
     });
 });
-document.getElementById('contactForm').addEventListener('submit', (e) => {
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop - 60,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+document.getElementById('contactForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    alert('Хабарламаңыз жіберілді! Рахмет.');
-    e.target.reset();
+    alert('Рахмет! Хабарламаңыз қабылданды.');
+    this.reset();
 });
